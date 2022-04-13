@@ -1,1 +1,23 @@
-test
+<html>
+    <head>
+	<title>W02: Example 06</title>
+    </head>
+    <body>
+    <p>情報可視化論第２回課題task2<p>
+    <p>min mid max</p>
+    <p>(x, y, z)=(5, 4, 8)</p>
+	<script src="vec3.js"></script>
+	<script>
+     var x = 5, y = 4, z = 8; // (input values)
+     var v = new Vec3( x, y, z );
+     var min = v.min(); // 4 (output value)
+     var mid = v.mid(); // 5 (output value)
+     var max = v.max(); // 8 (output value)
+     document.write( min);
+     document.write("\t");
+     document.write( mid);
+     document.write("\t");
+     document.write( max);
+	</script>
+    </body>
+</html>
