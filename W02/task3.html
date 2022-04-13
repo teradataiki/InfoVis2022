@@ -1,1 +1,140 @@
-test
+<html>
+    <head>
+	<title>W02: task3</title>
+    </head>
+    <body>
+    <p>情報可視化論第２回課題task3<p>
+    <p>頂点の座標を3つ指定しその三角形の綿製を計算するプログラムの実装</p>
+    <p>また、その頂点の指定を行うインターフェースを実装する</p>
+    
+    
+    <p>点１のX座標=<span id="span0"></span>　　　Y座標=<span id="span1"></span>　　　Z座標=<span id="span2"></span></p>
+    <input type="number" id="x0" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn0()" />
+    <script>
+    function clickBtn0() {
+    const x0 = document.getElementById("x0");
+    document.getElementById("span0").textContent = x0.value;
+    }
+    </script>
+    <input type="number" id="y0" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn1()" />
+    <script>
+    function clickBtn1() {
+    const y0 = document.getElementById("y0");
+    document.getElementById("span1").textContent = y0.value;
+    }
+    </script>
+    <input type="number" id="z0" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn2()" />
+    <script>
+    function clickBtn2() {
+    const z0 = document.getElementById("z0");
+    document.getElementById("span2").textContent = z0.value;
+    }
+    </script>
+
+    <p>点2のX座標=<span id="span3"></span>　　　Y座標=<span id="span4"></span>　　　Z座標=<span id="span5"></span></p>
+    <input type="number" id="x1" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn3()" />
+    <script>
+    function clickBtn3() {
+    const x1 = document.getElementById("x1");
+    document.getElementById("span3").textContent = x1.value; 
+    }
+    </script>
+    <input type="number" id="y1" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn4()" />
+    <script>
+    function clickBtn4() {
+    const y1 = document.getElementById("y1");
+    document.getElementById("span4").textContent = y1.value;
+    }
+    </script>
+    <input type="number" id="z1" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn5()" />
+    <script>
+    function clickBtn5() {
+    const z1 = document.getElementById("z1");
+    document.getElementById("span5").textContent = z1.value;
+    }
+    </script>
+
+    <p>点2のX座標=<span id="span6"></span>　　　Y座標=<span id="span7"></span>　　　Z座標=<span id="span8"></span></p>
+    <input type="number" id="x2" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn6()" />
+    <script>
+    function clickBtn6() {
+    const x2 = document.getElementById("x2");
+    document.getElementById("span6").textContent = x2.value;
+    }
+    </script>
+    <input type="number" id="y2" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn7()" />
+    <script>
+    function clickBtn7() {
+    const y2 = document.getElementById("y2");
+    document.getElementById("span7").textContent = y2.value;
+    }
+    </script>
+    <input type="number" id="z2" value="0" max="1000" />
+    <input type="button" value="数値更新" onclick="clickBtn8()" />
+    <script>
+    function clickBtn8() {
+    const z2 = document.getElementById("z2");
+    document.getElementById("span8").textContent = z2.value;
+    }
+    </script>
+
+    <script src="vec3.js"></script>
+
+    <p>三角形の面積の計算</p>
+    <body>
+        <form>
+        <button id="button">計算</button>
+        </form>
+        <label for="resultForm">計算結果: </label>
+        <input type="number" id="resultForm">
+    </body>
+    <script>
+    var button = document.getElementById("button");
+    button.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    var resultForm = document.getElementById("resultForm");
+
+     var x00, y00, z00; // (input vertex 0)
+     var x10, y10, z10; // (input vertex 1)
+     var x20, y20, z20; // (input vertex 2)
+
+     var x00 = x0.value;
+     var x10 = x1.value;
+     var x20 = x2.value;
+     
+     var y00 = y0.value;
+     var y10 = y1.value;
+     var y20 = y2.value;
+     
+     var z00 = z0.value;
+     var z10 = z1.value;
+     var z20 = z2.value;
+
+     var v0 = new Vec3( x00, y00, z00 );
+     var v1 = new Vec3( x10, y10, z10 );
+     var v2 = new Vec3( x20, y20, z20 );
+
+     var V10= v1.sub(v0);
+     var V20= v2.sub(v0);
+     var C  = V10.cross(V20);
+     var S = C.length()/2; // (output value)
+
+
+    
+    
+    resultForm.value = S;
+    });
+    </script>
+
+
+    </body>
+</html>
