@@ -1,6 +1,6 @@
-width,color,height,padding
-100,red,20,10
-50,blue,20,10
-80,black,20,10
-170,green,20,10
-150,yellow,20,10
+width,color,height,padding,x,y
+100,red,20,10,10,10
+50,blue,20,10,10,40
+80,black,20,10,10,70
+170,green,20,10,10,100
+150,yellow,20,10,10,130
