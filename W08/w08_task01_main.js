@@ -81,15 +81,11 @@ class BarchartPlot {
 
     update() {
         let self = this;
-
-       
-
         self.render();
     }
 
     render() {
         let self = this;
-
         self.chart.selectAll("rect")
             .data(self.data)
             .enter()
@@ -111,7 +107,5 @@ class BarchartPlot {
             .attr('y', self.config.margin.top - 10)
             .attr('font-size', '10pt')
             .text(self.config.title);
-
-       
     }
 }
