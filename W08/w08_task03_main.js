@@ -31,7 +31,7 @@ class PieChart {
             margin: config.margin || {top:10, right:10, bottom:10, left:20},
             title: config.title || '',
             radius:config.radius||100,
-            innerRadius: config.innerRadius || 50
+            
         };
         this.data = data;
         this.init();
@@ -54,7 +54,7 @@ class PieChart {
             .value(d => d.value);
 
             self.arc = d3.arc()
-            .innerRadius(self.config.innerRadius)
+            .innerRadius(self.config.radius / 2)
             .outerRadius(self.config.radius);
 
             self.color = d3.scaleOrdinal()
@@ -78,7 +78,7 @@ class PieChart {
             .attr('d', self.arc)
             .attr('fill', d => self.color(d.index))
             .attr('stroke', 'black')
-            .style('stroke-width', '2px');
+            .style('stroke-width', '1px');
 
         
             pieElement
