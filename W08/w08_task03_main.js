@@ -9,18 +9,19 @@ d3.csv("https://teradataiki.github.io/InfoVis2022/W08/data.csv")
             margin: {top:30, right:30, bottom:50, left:30},
             xtics:10,
             yticks:10,
+            radius:100,
             xlabel: 'xlabel',
             title: 'title',
         };
 
-        let barchart_plot = new BarchartPlot( config, data );
-        barchart_plot.update();
+        let piechart_plot = new PieChart( config, data );
+        piechart_plot.update();
     })
     .catch( error => {
         console.log( error );
     });
 
-class BarchartPlot {
+class PieChart {
 
     constructor( config, data ) {
         this.config = {
@@ -28,11 +29,10 @@ class BarchartPlot {
             width: config.width || 256,
             height: config.height || 256,
             margin: config.margin || {top:10, right:10, bottom:10, left:20},
-            xticks: config.xticks || 10,
-            yticks: config.yticks || 10,
-            xlabel: config.xlabel || '',
             title: config.title || '',
-        }
+            radius:config.radius||100,
+            innerRadius: config.innerRadius || 50
+        };
         this.data = data;
         this.init();
     }
@@ -46,72 +46,51 @@ class BarchartPlot {
 
            
             self.chart = self.svg.append('g')
-                .attr('transform', `translate(${self.config.margin.left}, ${self.config.margin.top})`);
+                .attr('transform', `translate(${self.config.width / 2}, ${self.config.height / 2})`);
     
-            self.inner_width = self.config.width - self.config.margin.left - self.config.margin.right;
-            self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
-    
-            self.xscale = d3.scaleLinear()
-                .domain([0, d3.max(self.data, d => d.value)])
-                .range([0, self.inner_width]);
-    
-            self.yscale = d3.scaleBand()
-                .domain(self.data.map(d => d.label))
-                .range([0, self.inner_height])
-                .paddingInner(0.1);
-    
-            self.xaxis = d3.axisBottom(self.xscale)
-                .ticks(5);
-                
-    
-            self.yaxis = d3.axisLeft(self.yscale)
-                .ticks(0)
-                .tickSizeOuter(0);
-    
-            self.xaxis_group = self.chart.append('g')
-                .attr('transform', `translate(0, ${self.inner_height})`)
-                .call(self.xaxis);
-    
-            self.yaxis_group = self.chart.append('g')
-                .call(self.yaxis);
-    
-            self.axis_group = self.svg.append('g')
-            self.title_group = self.svg.append('g')
+            
+
+            self.pie = d3.pie()
+            .value(d => d.value);
+
+            self.arc = d3.arc()
+            .innerRadius(self.config.innerRadius)
+            .outerRadius(self.config.radius);
+
+            self.color = d3.scaleOrdinal()
+            .range(["blue", "red", "green", "yellow", "pink"]);
     }
 
     update() {
         let self = this;
-
-       
-
         self.render();
     }
 
     render() {
         let self = this;
 
-        self.chart.selectAll("rect")
-            .data(self.data)
-            .enter()
-            .append("rect")
-            .attr("x", 0)
-            .attr("y", d => self.yscale(d.label))
-            .attr("width", d => self.xscale(d.value))
-            .attr("height", self.yscale.bandwidth())
-            ;
-      
-            self.axis_group.append('text')
-            .attr('x', self.config.width / 2)
-            .attr('y', self.config.margin.top + self.inner_height + 35)
-            .attr('font-size', '10pt')
-            .text(self.config.xlabel);
+        let pieElement = self.chart.selectAll('pie')
+            .data(self.pie(self.data)).enter()
+            .append('g')
 
-        self.title_group.append('text')
-            .attr('x', self.config.width / 2)
-            .attr('y', self.config.margin.top - 10)
-            .attr('font-size', '10pt')
-            .text(self.config.title);
+            pieElement
+            .append('path')
+            .attr('d', self.arc)
+            .attr('fill', d => self.color(d.index))
+            .attr('stroke', 'black')
+            .style('stroke-width', '2px');
+
+        
+            pieElement
+            .append("text")
+            .attr('transform', d => `translate(${self.arc.centroid(d)})`)
+            .attr("text-anchor", "middle")
+            .text(d => d.data.label);
+            
+    }
+            
+
+        
 
        
     }
-}
