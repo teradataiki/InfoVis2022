@@ -1,6 +1,6 @@
 d3.csv("https://teradataiki.github.io/InfoVis2022/W08/data2.csv")
     .then( data => {
-        data.forEach( d => { d.value = +d.value; });
+        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
 
         var config = {
             parent: '#drawing_region',
@@ -14,7 +14,7 @@ d3.csv("https://teradataiki.github.io/InfoVis2022/W08/data2.csv")
         };
 
         let linechart_plot = new LinechartPlot( config, data );
-        kinechart_plot.update();
+        linechart_plot.update();
     })
     .catch( error => {
         console.log( error );
@@ -40,6 +40,7 @@ class LinechartPlot {
 
     init() {
         let self = this;
+        console.log(self.data)
 
         self.svg = d3.select( self.config.parent )
             .attr('width', self.config.width)
@@ -56,8 +57,8 @@ class LinechartPlot {
                 .domain([0, d3.max(self.data, d => d.x)])
                 .range([0, self.inner_width]);
     
-            self.yscale = d3.scaleBand()
-                .domain(self.data.map(d => d.y))
+            self.yscale = d3.scaleLinear()
+                .domain([0, d3.max(self.data, d => d.y)])
                 .range([self.inner_height,0]);
                
     
@@ -66,7 +67,7 @@ class LinechartPlot {
                 
     
             self.yaxis = d3.axisLeft(self.yscale)
-                .ticks(0)
+                .ticks(5)
                 .tickSizeOuter(0);
     
             self.xaxis_group = self.chart.append('g')
@@ -78,6 +79,12 @@ class LinechartPlot {
     
             self.axis_group = self.svg.append('g')
             self.title_group = self.svg.append('g')
+
+
+            self.area = d3.area()
+            .x(d => self.xscale(d.x))
+            .y1(d => self.yscale(d.y))
+            .y0(d3.max(self.data, d => self.yscale(d.y))+20);
     }
 
     update() {
@@ -106,7 +113,11 @@ class LinechartPlot {
             .attr('y', self.config.margin.top - 10)
             .attr('font-size', '10pt')
             .text(self.config.title);
-
-       
+            
+            
+            self.chart.append('path')
+            .attr('d', self.area(self.data))
+            .attr('stroke', 'black')
+            .attr('fill', 'white')
     }
 }
