@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>Final Task</title>
+	<style>
+	 body {
+	     font-family: system-ui;
+	 }
+	 .container {
+	     display: flex;
+	 }
+	 .bar.active {
+	     stroke: #000;
+	 }
+	 #tooltip {
+	     position: absolute;
+	     opacity: 0;
+	     background: #fff;
+	     border: 1px solid #ddd;
+	     font-size: 12px;
+	     font-weight: 600;
+	     padding: 2px 8px;
+	 }
+	 .tooltip-label {
+	     font-weight: 500;
+	     font-size: 11px;
+	     color: #888;
+	 }
+	</style>
+    </head>
+    <body>
+	<h2>FinalTask(228x216x):都道府県ごとの様々なデータ比較</h2>
+	
+	<p>
+		各データの都道府県順位
+	<select name="BarValue" id="BarValue">
+		<option value= "人口" selected>棒グラフの値を選択してください</option>
+		<option value= "人口" >人口</option>
+		<option value="日本人人口">日本人人口</option>
+		<option value="15歳以下人口">15歳以下人口</option>
+		<option value= "幼稚園数" >幼稚園数</option>
+		<option value="小学校数">小学校数</option>
+		<option value="中学校数">中学校数</option>
+	</select>
+	<button type="button" id="Decision1">決定</button>
+	棒グラフの値： <span id="span1"></span>
+		<button type="button" id="original">Original</button>
+		<button type="button" id="reverse">Reverse</button>
+		<button type="button" id="ascend">Ascend</button>
+        <button type="button" id="descend">Descend</button>
+	</p>
+	<p>
+		指定した２つのデータの相関関係
+	<select name="HorizontalValue" id="HorizontalValue">
+		<option disabled selected>横軸の値を選択してください</option>
+		<option value= "人口" >人口</option>
+		<option value="日本人人口">日本人人口</option>
+		<option value="15歳以下人口">15歳以下人口</option>
+	</select>
+	<button type="button" id="Decision2">決定</button>
+	横軸の値：<span id="span2"></span>
+	<select name="VerticalValue" id="VerticalValue">
+		<option disabled selected>縦軸の値を選択してください</option>
+		<option value= "人口" >人口</option>
+		<option value="日本人人口">日本人人口</option>
+		<option value="15歳以下人口">15歳以下人口</option>
+	</select>
+	<button type="button" id="Decision3">決定</button>
+	縦軸の値： <span id="span3"></span></p>
+	<p>
+	<div id="tooltip"></div>
+	<div class="container">
+	    <div><svg id="drawing_region_barchart" ></svg></div>
+		<div><svg id="drawing_region_scatterplot"></svg></div>
+	</div>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="FinalTask_ScatterPlot.js"></script>
+	<script src="FinalTask_BarChart.js"></script>
+	<script src="FinalTask_main.js"></script>
+    </body>
+</html>
